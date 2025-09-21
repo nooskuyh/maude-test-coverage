@@ -32,3 +32,14 @@ def parse_labels(spec: str) -> dict:
             eq_labels.add(m.group('label'))
 
     return {"Rule": rule_labels, "Eq": eq_labels}
+
+# --- Example -------------------------------------------------------------
+if __name__ == "__main__":
+    sample = """
+    *********** rule
+    rl BYE(N) => Hi(N) [label test2] .
+
+    *********** equation
+    ceq Hi(N) = Hi(100) if N =/= 100 = true [label test1] .
+    """
+    print(json.dumps(parse_labels(sample), indent=2))
