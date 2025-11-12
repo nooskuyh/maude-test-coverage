@@ -79,7 +79,7 @@ if __name__ == "__main__":
     rl BYE(N) => Hi(N) [label test2] .
 
     *********** indented rule (Format 1)
-      crl [indented-rule] : A => B if C .
+    crl [indented-rule] : A => B if C .
 
     *********** rule with no label
     rl NoLabel => Other .

@@ -6,13 +6,13 @@ mod SAMPLE is
   op Test4 : -> Test .
   op Test5 : -> Test .
  
-  rl [aa] : Test2 => Test3 . 
-  rl [cc] : Test4 => Test5 .
+  rl Test2 => Test3 . 
+  rl Test4 => Test5 .
   
-  eq [tempEQ1] : Test5 = Test2 .
-  eq [bb] : Test = Test2 .
+  eq Test5 = Test2 .
+  eq Test = Test2 .
 endm
 
 red Test .
-rew Test .
 red Test5 .
+rew Test4 .

@@ -9,10 +9,11 @@ mod SAMPLE is
   rl [aa] : Test2 => Test3 . 
   rl [cc] : Test4 => Test5 .
   
+  
   eq [tempEQ1] : Test5 = Test2 .
   eq [bb] : Test = Test2 .
 endm
 
 red Test .
-rew Test .
 red Test5 .
+rew Test4 .
