@@ -5,7 +5,9 @@ mod SAMPLE is
   op Test3 : -> Test .
   op Test4 : -> Test .
   op Test5 : -> Test .
- 
+  op Trash : -> Test .
+
+  rl Trash => Test4 . 
   rl Test2 => Test3 . 
   rl Test4 => Test5 .
   
@@ -15,4 +17,5 @@ endm
 
 red Test .
 red Test5 .
+
 rew Test4 .

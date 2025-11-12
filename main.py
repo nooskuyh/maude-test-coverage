@@ -41,11 +41,18 @@ def run_test_file(maude_path: str, file: str):
            
 if __name__ == "__main__":
     maude_path = "Maude-3.5.1/maude -no-ansi-color"
+    results = []
+
     test_file = "test.maude"
-    
     target_labels, tested_labels = run_test_file(maude_path, test_file)
     result = eval_coverage(target_labels, tested_labels)
     result.append(test_file)
+    results.append(result)
+
+    test_file = "test2.maude"    
+    target_labels, tested_labels = run_test_file(maude_path, test_file)
+    result = eval_coverage(target_labels, tested_labels)
+    result.append(test_file)
+    results.append(result)
     
-    
-    printer.print_report([result])
+    printer.print_report(results)
