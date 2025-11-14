@@ -60,11 +60,13 @@ def _collect_labels(text: str) -> dict:
 
 def label_file(in_path: str):
     src = Path(in_path).read_text(encoding="utf-8")
+    
     processed = add_temp_labels(src)
-
-    out_dir = Path.cwd() / "temp"
+    out_dir = Path.cwd() / "temp" / Path(in_path).parent
     out_dir.mkdir(parents=True, exist_ok=True)
+    
     out_file = out_dir / Path(in_path).name
     out_file.write_text(processed, encoding="utf-8")
 
+    print(out_file, out_dir)
     return str(out_file), _collect_labels(processed)

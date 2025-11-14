@@ -4,7 +4,9 @@ from tools import label
 from tools import printer
 import pexpect, json, pathlib
 import os
-
+import argparse
+import sys
+from pathlib import Path
 
 def eval_coverage_detail(target_labels: dict, tested_labels: dict):
     for kind in ["Rule", "Eq"]:
@@ -27,9 +29,8 @@ def eval_coverage(target_labels: dict, tested_labels: dict):
 
 
 def run_test_file(maude_path: str, file: str):
-    input_path = "samples/"
     input_maude_file = file
-    _ , target_labels = label.label_file(input_path + input_maude_file) 
+    _ , target_labels = label.label_file(input_maude_file) 
     maude = pexpect.spawn(maude_path)
     maude.sendline('set trace on .')
     maude.sendline(f'load temp/{input_maude_file}')
@@ -38,21 +39,49 @@ def run_test_file(maude_path: str, file: str):
     tested_labels = parser.parse_labels(result)
     return target_labels, tested_labels
            
-           
-if __name__ == "__main__":
+def main():
+    parser = argparse.ArgumentParser(
+        description="Run Maude coverage tests on all .maude files in a directory."
+    )
+    parser.add_argument(
+        "test_directory",
+        help="The path to the directory containing test files."
+    )
+    args = parser.parse_args()
+
     maude_path = "Maude-3.5.1/maude -no-ansi-color"
+    test_dir = Path(args.test_directory)
+
+    # 3. Validate the input directory
+    if not test_dir.is_dir():
+        print(f"Error: Path '{test_dir}' is not a valid directory.", file=sys.stderr)
+        sys.exit(1)
+
+    # 4. Find all .maude files recursively
+    # .rglob("*.maude") means "recursive glob" (search all subfolders)
+    test_files = list(test_dir.rglob("*.maude"))
+
+    if not test_files:
+        print(f"No .maude files found in '{test_dir}'.")
+        return
+
+    print(f"Found {len(test_files)} test file(s). Starting coverage analysis...")
+    
     results = []
 
-    test_file = "test.maude"
-    target_labels, tested_labels = run_test_file(maude_path, test_file)
-    result = eval_coverage(target_labels, tested_labels)
-    result.append(test_file)
-    results.append(result)
+    for test_file_path in test_files:
+        # Convert the Path object to a string for the function
+        test_file_str = str(test_file_path)
+        # Run the same logic as your original script
+        target_labels, tested_labels = run_test_file(maude_path, test_file_str)
+        result = eval_coverage(target_labels, tested_labels)
+        
+        # Append the test file path to its result (matching original logic)
+        result.append(test_file_str)
+        results.append(result)
 
-    test_file = "test2.maude"    
-    target_labels, tested_labels = run_test_file(maude_path, test_file)
-    result = eval_coverage(target_labels, tested_labels)
-    result.append(test_file)
-    results.append(result)
-    
-    printer.print_report(results)
+    # 6. Print the final report
+    printer.print_report(results) 
+              
+if __name__ == "__main__":
+    main()
