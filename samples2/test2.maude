@@ -1,0 +1,21 @@
+mod SAMPLE is
+  sort Test .
+  op Test : -> Test .
+  op Test2 : -> Test . 
+  op Test3 : -> Test .
+  op Test4 : -> Test .
+  op Test5 : -> Test .
+  op Trash : -> Test .
+
+  rl Trash => Test4 . 
+  rl Test2 => Test3 . 
+  rl Test4 => Test5 .
+  
+  eq Test5 = Test2 .
+  eq Test = Test2 .
+endm
+
+red Test .
+red Test5 .
+
+rew Test4 .
