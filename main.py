@@ -35,7 +35,8 @@ def run_test_file(maude_path: str, file: str):
     maude.sendline('set trace on .')
     maude.sendline(f'load temp/{input_maude_file}')
     maude.sendline('quit')
-    result = maude.read().decode()    
+    result = maude.read().decode()
+    print(result)    
     tested_labels = parser.parse_labels(result)
     return target_labels, tested_labels
            
@@ -81,6 +82,7 @@ def main():
         results.append(result)
 
     # 6. Print the final report
+    print(results)
     printer.print_report(results) 
               
 if __name__ == "__main__":
