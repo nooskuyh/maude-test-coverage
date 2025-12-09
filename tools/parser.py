@@ -1,7 +1,6 @@
 import re
 import json
 
-# Pattern for lines starting with a Maude keyword (allowing for indentation)
 _KIND_RE = re.compile(
     r'^\s*(?P<kind>eq|crl|rl|ceq)\b(?P<rest>.*)$',
     re.MULTILINE
