@@ -34,7 +34,6 @@ def parse_labels(spec: str, target_labels: dict) -> dict:
         extracted label strings, sorted alphabetically.
     """
 
-    # Find all lines that start with a keyword (eq, rl, etc.)
     for m_kind in _KIND_RE.finditer(spec):
         kind = m_kind.group('kind')
         rest_of_line = m_kind.group('rest')
