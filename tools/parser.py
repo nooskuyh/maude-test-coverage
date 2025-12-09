@@ -6,7 +6,6 @@ _KIND_RE = re.compile(
     re.MULTILINE
 )
 
-# Pattern 1: Matches [label-name] : (at the start of the 'rest' string)
 _LABEL_RE_FORMAT_1 = re.compile(r'^\s*\[(?P<label>[^\]]+)\]\s*:')
 
 # Pattern 2: Matches [label label-name] (anywhere in the 'rest' string)
